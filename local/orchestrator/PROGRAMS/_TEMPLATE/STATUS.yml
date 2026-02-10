@@ -1,0 +1,12 @@
+program: P-YYYY-NNN
+name: 任务标题
+phase: planning          # planning / in-progress / review / done
+status: not-started      # not-started / active / blocked / deployed
+
+tasks:
+  - id: t1
+    name: 任务描述
+    status: pending      # pending / in-progress / done / blocked
+  - id: t2
+    name: 任务描述
+    status: pending

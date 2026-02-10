@@ -1,0 +1,12 @@
+# 写入范围控制
+#
+# write: Agent 可以修改的文件/目录
+# forbidden: 绝对不能写入的文件
+
+write:
+  - repos/<repo>/src/xxx.ts
+  - repos/<repo>/src/yyy.ts
+
+forbidden:
+  - .env
+  - repos/<repo>/.env
