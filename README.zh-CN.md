@@ -95,10 +95,10 @@ cp -r local/* your-project/
 |------|--------|-------|
 | 状态管理 | Issue + Project Board | STATUS.yml |
 | 任务定义 | Issue body | PROGRAM.md |
-| 写入范围控制 | — | SCOPE.yml |
+| 写入范围控制 | SCOPE（Issue / 配置） | SCOPE.yml |
 | 上下文恢复 | Issue comment `## HANDOFF` | workspace/HANDOFF.md |
 | 全局视图 | `gh project item-list` | 扫描 PROGRAMS/ 目录 |
-| Sub-Agent 编排 | — | SUB-AGENT.md |
+| Sub-Agent 编排 | SUB-AGENT.md | SUB-AGENT.md |
 | 平台依赖 | GitHub / GitLab | 无 |
 
 ## 快速开始
@@ -240,7 +240,8 @@ code-relay/
 │           ├── BOOT.md                # 启动顺序
 │           ├── CORE.md                # 工作协议
 │           ├── DEV-FLOW.md            # 开发流程
-│           └── RESOURCE-MAP.yml           # 资源索引
+│           ├── SUB-AGENT.md           # Sub-Agent 规范
+│           └── RESOURCE-MAP.yml       # 资源索引
 │
 └── local/                             # 本地文件协作模式
     ├── AGENTS.md                      # Agent 入口

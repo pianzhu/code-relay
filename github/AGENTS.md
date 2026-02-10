@@ -47,7 +47,8 @@ your-project/
 │       ├── BOOT.md                # 启动加载顺序
 │       ├── CORE.md                # 工作协议
 │       ├── DEV-FLOW.md            # 开发流程规范
-│       └── RESOURCE-MAP.yml           # 仓库和基础设施索引
+│       ├── SUB-AGENT.md           # Sub-Agent 规范
+│       └── RESOURCE-MAP.yml      # 资源索引
 │
 └── repos/                         # 代码仓库（可选，多仓库时使用）
 ```

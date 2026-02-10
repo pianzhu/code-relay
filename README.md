@@ -95,10 +95,10 @@ cp -r local/* your-project/
 |-----------|--------|-------|
 | State management | Issue + Project Board | STATUS.yml |
 | Task definition | Issue body | PROGRAM.md |
-| Write scope control | — | SCOPE.yml |
+| Write scope control | SCOPE in Issue / config | SCOPE.yml |
 | Context recovery | Issue comment `## HANDOFF` | workspace/HANDOFF.md |
 | Global view | `gh project item-list` | Scan PROGRAMS/ directory |
-| Sub-Agent orchestration | — | SUB-AGENT.md |
+| Sub-Agent orchestration | SUB-AGENT.md | SUB-AGENT.md |
 | Platform dependency | GitHub / GitLab | None |
 
 ## Quick Start
@@ -240,6 +240,7 @@ code-relay/
 │           ├── BOOT.md                # Boot sequence
 │           ├── CORE.md                # Work protocol
 │           ├── DEV-FLOW.md            # Development flow
+│           ├── SUB-AGENT.md           # Sub-Agent spec
 │           └── RESOURCE-MAP.yml       # Resource index
 │
 └── local/                             # Local file collaboration mode

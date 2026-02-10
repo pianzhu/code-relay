@@ -169,6 +169,25 @@ git worktree remove ../repos/<repo>-<feature>
 
 ---
 
+## Scope 控制
+
+每个任务可以定义写入范围。在 Issue body 或单独的配置中指定：
+
+```yaml
+write:
+  - src/auth/
+  - src/middleware/
+
+forbidden:
+  - .env
+```
+
+- **只修改** `write` 允许的路径
+- **超出范围**时询问用户，不要擅自修改
+- `forbidden` 列表中的路径绝对不能写入
+
+---
+
 ## 提交代码前
 
 1. 在 worktree 目录运行检查命令（如 `pnpm check` / `go vet` / `cargo test`）
