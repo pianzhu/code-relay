@@ -1,0 +1,265 @@
+#+title:      xray-code-relay-agent-workflow
+#+date:       [2026-02-13 Fri 05:49]
+#+filetags:   :read:xray:article:
+#+identifier: 20260213T054921
+#+source:     /home/user/strands-demo/code-relay/local/
+
+* WISDOM CORE
+
+#+begin_example
++------------------------------------------------------------------+
+|                                                                  |
+|  Agent Continuity = Boot(Context) x Scope(Guard) + Handoff(State)|
+|                                                                  |
+|  AI Agent 的可靠性 = 启动时加载完整上下文                           |
+|                     x 运行时严格范围守卫                            |
+|                     + 结束时结构化状态交接                          |
++------------------------------------------------------------------+
+#+end_example
+
+AI Coding Agent 的核心挑战不是"写代码"，而是"跨会话保持一致性"。
+这套协议通过 Boot-Execute-Handoff 三段式流程，将有限上下文窗口
+转化为无限连续的工作能力。
+
+* LAYER 1: SURFACE SCAN
+
+**主题域**: AI Coding Agent 工作流编排与状态管理协议
+
+**核心论点**: 通过结构化的启动序列、范围控制、状态持久化和子代理委托机制，
+让 AI Agent 在有限上下文窗口下可靠地完成跨会话的复杂开发任务。
+
+**论据支撑**:
+- BOOT.md 定义了严格的 6 步加载顺序，确保 Agent 每次启动都获得完整上下文
+- SCOPE.yml 的 write/forbidden 机制防止 Agent 越权修改文件
+- HANDOFF.md / CHECKPOINT.md 实现跨会话零信息损失
+- SUB-AGENT 的 4 行返回规范保护主 Agent 上下文窗口不被撑爆
+- Program 模板（PROGRAM.md + STATUS.yml + SCOPE.yml）将任务标准化为可追踪单元
+
+* LAYER 2: DEEP PENETRATION
+
+**问题意识**: AI Coding Agent 面临三个根本性挑战：(1) 上下文窗口有限，
+无法记住所有信息；(2) 每次会话是无状态的，不知道上次做到哪里；
+(3) 没有边界约束时可能修改不该改的文件。这套协议就是为了系统性地
+解决这三个问题。
+
+**思维模型**: "有限状态机 + 文件系统即数据库"。整个协议把 Agent 视为
+一个有限状态机（planning -> in-progress -> review -> done），
+而文件系统充当持久化层——所有状态、上下文、交接信息都写入文件，
+不依赖 Agent 的记忆。这是一种"外部化认知"的设计哲学。
+
+**隐含假设**:
+- Agent 的上下文窗口必然不够用（所以需要 HANDOFF/CHECKPOINT）
+- Agent 不可完全信任（所以需要 SCOPE 控制和 forbidden 列表）
+- 文件系统是可靠的持久化介质（所有状态都写文件）
+- 用户愿意遵循结构化的交互模式（"继续 P-2026-001"）
+
+**反常识点**: 传统软件开发中，开发者的记忆和经验是连续的；但 AI Agent
+每次启动都是"失忆"的。这套协议不是试图让 Agent "记住"，而是接受
+失忆的现实，转而建立一套"外部记忆系统"——这比试图扩大上下文窗口
+更务实、更可靠。
+
+* LAYER 3: CORE LOCALIZATION
+
+**智慧公式**: ~AgentReliability = Boot(FullContext) * Scope(Guard) + Handoff(StructuredState)~
+
+**适用边界**:
+- 成立: 任务可分解为明确阶段、有清晰的文件边界、需要跨会话持续工作
+- 失效: 纯探索性任务（无法预定义 Scope）、实时交互场景（无暇写 HANDOFF）、单次简单问答
+
+**迁移潜力**: 分布式系统容错设计, 医疗交接班协议, 接力赛战术编排
+
+* LAYER 4: WISDOM TOPOLOGY
+
+**智慧连接**: 与微服务架构的"无状态服务 + 外部状态存储"模式高度相似；
+与航空领域的 Checklist 文化（每次起飞前按清单检查）异曲同工；
+与 GTD（Getting Things Done）的"外部化大脑"理念一脉相承。
+
+**认知跃迁**: "AI Agent 需要更大的上下文窗口" --> "AI Agent 需要更好的外部状态管理协议"
+
+**行动启示**:
+1. 为任何需要跨会话工作的 AI Agent 建立结构化的 HANDOFF 机制
+2. 用 SCOPE 文件显式约束 Agent 的写入权限，而非依赖 Agent 的"自觉"
+3. Sub-Agent 返回结果必须压缩为摘要+文件路径，保护主 Agent 上下文
+
+* ARGUMENT TOPOLOGY
+
+#+begin_example
+
+                    +------------------+
+                    |   USER COMMAND   |
+                    | "继续 P-2026-001" |
+                    +--------+---------+
+                             |
+                             v
+                    +------------------+
+                    |    AGENTS.md     |
+                    |  (Entry Point)   |
+                    +--------+---------+
+                             |
+                    =========v==========
+                    |  BOOT SEQUENCE   |
+                    ====================
+                             |
+              +--------------+--------------+
+              |              |              |
+              v              v              v
+        +-----------+  +-----------+  +-------------+
+        |  CORE.md  |  | DEV-FLOW  |  | RESOURCE-MAP|
+        | (Protocol)|  | (Git Flow)|  |  (Repos)    |
+        +-----------+  +-----------+  +-------------+
+              |              |              |
+              +--------------+--------------+
+                             |
+                    =========v==========
+                    |  LOAD PROGRAM    |
+                    ====================
+                             |
+              +--------------+--------------+
+              |              |              |
+              v              v              v
+        +-----------+  +-----------+  +-----------+
+        | PROGRAM.md|  | STATUS.yml|  | SCOPE.yml |
+        |  (What)   |  |  (Where)  |  | (Boundary)|
+        +-----------+  +-----------+  +-----------+
+                             |
+                    =========v==========
+                    |    EXECUTE       |
+                    | (Dev in Worktree)|
+                    ====================
+                             |
+              +---------+----+----+---------+
+              |         |         |         |
+              v         v         v         v
+          +------+ +--------+ +------+ +--------+
+          | Code | | Test   | | PR   | | Update |
+          |      | |        | |      | | STATUS |
+          +------+ +--------+ +------+ +--------+
+                             |
+                    =========v==========
+                    |    EXIT PHASE    |
+                    ====================
+                             |
+              +--------------+--------------+
+              |              |              |
+              v              v              v
+        +-----------+  +-----------+  +-----------+
+        | HANDOFF.md|  |CHECKPOINT |  | RESULT.md |
+        | (Pause)   |  |  (Save)   |  |  (Done)   |
+        +-----------+  +-----------+  +-----------+
+#+end_example
+
+* TRANSFER MATRIX
+
+**分布式系统容错**: 微服务每次请求无状态，靠外部存储（Redis/DB）保持
+一致性。Agent 每次会话无状态，靠文件系统（HANDOFF/STATUS）保持
+一致性。 --> ~SystemReliability = StatelessWorker * ExternalStateStore~
+
+**医疗交接班协议**: 护士交接班时使用 SBAR（Situation-Background-
+Assessment-Recommendation）结构化交接。Agent 使用 HANDOFF.md
+（当前状态-分支-下一步-注意事项）结构化交接。两者都是为了在
+"认知主体切换"时实现零信息损失。 --> ~HandoffQuality = Structure * Completeness~
+
+**接力赛战术编排**: 接力赛的核心不是跑得快，而是交接棒不掉。
+Program 的 HANDOFF 机制就是"交接区"的设计——在上下文耗尽前
+主动写入交接文档，确保下一个"选手"（新会话）能无缝接力。
+--> ~RelaySuccess = RunnerSpeed * HandoffPrecision~
+
+* COGNITIVE UPGRADE
+
+#+begin_example
++---------------------------+         +---------------------------+
+|         BEFORE            |         |         AFTER             |
+|                           |  --->   |                           |
+| AI Agent 是一个聪明的助手  |         | AI Agent 是一个无状态的    |
+| 给它足够大的上下文窗口      |         | 工作节点，需要外部协议来    |
+| 它就能完成任何任务          |         | 保证跨会话的连续性和安全性  |
++---------------------------+         +---------------------------+
+#+end_example
+
+* ACTION PROTOCOL
+
+- [ ] 建立 HANDOFF 机制: 为你的 AI Agent 工作流添加结构化的交接文档模板，包含"当前状态 / 分支 / 下一步 / 注意事项"四个必填字段
+- [ ] 实施 SCOPE 控制: 为每个 Agent 任务定义明确的 write/forbidden 文件列表，将"信任 Agent 的判断"替换为"显式的权限边界"
+- [ ] 压缩 Sub-Agent 返回: 制定 Sub-Agent 返回规范（状态+文件路径+决策点），禁止在返回消息中包含大段代码或文档内容
+
+* APPENDIX: WORKFLOW DETAIL
+
+** 触发条件
+
+整个流程的触发条件有三种：
+
+1. *用户指定 Program*: 用户说"继续 P-2026-001"或"新 Program: xxx"，
+   Agent 读取 AGENTS.md 进入 Boot Sequence
+2. *用户未指定 Program*: Agent 扫描 orchestrator/PROGRAMS/ 目录，
+   展示任务列表，询问用户要做什么
+3. *首次启动（RESOURCE-MAP 为空）*: Agent 询问用户项目基本情况，
+   自动生成 RESOURCE-MAP.yml，然后进入正常启动流程
+
+** 完整流程（7 步）
+
+*** Step 1: Boot — 加载上下文
+
+读取顺序：CORE.md -> DEV-FLOW.md -> RESOURCE-MAP.yml -> PROGRAM.md -> STATUS.yml -> SCOPE.yml
+
+*为什么*: Agent 每次启动都是"失忆"的，必须通过固定顺序加载所有
+必要上下文，才能知道"我是谁、我在做什么、我能改什么"。
+
+*产出*: 输出当前 Program 名称、目标、阶段、下一步行动。
+
+*** Step 2: 确认任务
+
+从 PROGRAM.md 和 STATUS.yml 确认当前要做什么。如果存在
+HANDOFF.md 或 CHECKPOINT.md，优先读取恢复上下文。
+
+*为什么*: 防止 Agent 凭"印象"工作，必须从持久化文件中获取
+真实状态。HANDOFF/CHECKPOINT 的优先级高于 STATUS.yml，
+因为它们包含更详细的上下文信息。
+
+*产出*: 明确的当前任务和行动计划。
+
+*** Step 3: 创建 Worktree 开发
+
+在独立的 git worktree 中开发，不在主仓库切分支。
+
+*为什么*: 主仓库可能有未提交的变更，多任务并行时互不影响，
+保持主仓库干净。Worktree 是 git 原生的隔离机制。
+
+*产出*: 独立的开发环境 repos/<repo>-<feature>/
+
+*** Step 4: 开发与持续更新
+
+在 worktree 中编码、测试、提交。开发过程中持续更新 STATUS.yml。
+
+*为什么*: STATUS.yml 是"实时进度条"，即使 Agent 中途崩溃，
+下次启动也能从 STATUS.yml 知道做到哪里了。
+
+*产出*: 代码变更 + 更新的 STATUS.yml
+
+*** Step 5: 提交 PR 与合并
+
+git push -> gh pr create -> gh pr merge -> 清理 worktree
+
+*为什么*: 通过 PR 流程保证代码质量，合并后清理 worktree
+避免目录膨胀。
+
+*产出*: 合并到 main 的代码
+
+*** Step 6: 状态交接（如未完成）
+
+如果任务未完成，写入 HANDOFF.md（交接文档）和/或
+CHECKPOINT.md（状态快照）。
+
+*为什么*: 上下文窗口有限，长任务必然跨会话。HANDOFF 的
+信息密度远高于 compress 后的残留上下文，是跨会话连续性的
+关键保障。
+
+*产出*: workspace/HANDOFF.md 和/或 workspace/CHECKPOINT.md
+
+*** Step 7: 完成收尾
+
+更新 STATUS.yml（phase: done），写入 workspace/RESULT.md。
+
+*为什么*: RESULT.md 是 Program 的"结项报告"，记录最终成果，
+供未来参考。STATUS.yml 标记为 done 防止重复执行。
+
+*产出*: 最终的 STATUS.yml + RESULT.md
